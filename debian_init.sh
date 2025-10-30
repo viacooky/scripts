@@ -134,7 +134,7 @@ install_zsh() {
     curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 }
 
-install_trzsz() {
+install_tcping() {
     wget -O tcping.tar.gz https://github.com/pouriyajamshidi/tcping/releases/latest/download/tcping-linux-amd64-static.tar.gz
     tar -xvf tcping.tar.gz
     chmod +x tcping
@@ -162,6 +162,14 @@ install_ufw_docker() {
     systemctl restart ufw
 }
 
+install_trzsz() {
+    apt install -y curl gpg
+    curl -s 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x7074ce75da7cc691c1ae1a7c7e51d1ad956055ca' | gpg --dearmor -o /usr/share/keyrings/trzsz.gpg
+    echo 'deb [signed-by=/usr/share/keyrings/trzsz.gpg] https://ppa.launchpadcontent.net/trzsz/ppa/ubuntu jammy main' | sudo tee /etc/apt/sources.list.d/trzsz.list
+    apt update
+    apt install trzsz
+}
+
 # 菜单显示函数
 show_menu() {
     clear
@@ -172,10 +180,11 @@ show_menu() {
     echo "  2. 设置主机名"
     echo "  3. 设置 ssh "
     echo "  4. 安装 zsh + zim "
-    echo "  5. 安装 trzsz "
+    echo "  5. 安装 tcping "
     echo "  6. 安装 ufw "
     echo "  7. 安装 docker "
     echo "  8. 安装 ufw-docker "
+    echo "  9. 安装 trzsz "
     echo "  0. 退出脚本"
     echo "---------------------------------------------------------"
     read -p "请输入选项：" choice
@@ -205,7 +214,7 @@ while true; do
             read -p "按 Enter 键返回菜单"
             ;;
         5)
-            install_trzsz
+            install_tcping
             read -p "按 Enter 键返回菜单"
             ;;
         6)
@@ -218,6 +227,10 @@ while true; do
             ;;
         8)
             install_ufw_docker
+            read -p "按 Enter 键返回菜单"
+            ;;
+        9)
+            install_trzsz
             read -p "按 Enter 键返回菜单"
             ;;
         0)
