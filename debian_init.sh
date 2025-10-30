@@ -129,6 +129,38 @@ setup_ssh() {
     fi
 }
 
+install_zsh() {
+    apt install -y zsh
+    curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+}
+
+install_trzsz() {
+    wget -O tcping.tar.gz https://github.com/pouriyajamshidi/tcping/releases/latest/download/tcping-linux-amd64-static.tar.gz
+    tar -xvf tcping.tar.gz
+    chmod +x tcping
+    mv tcping /usr/local/bin/
+    rm tcping.tar.gz
+}
+
+install_ufw() {
+    apt install ufw
+    ufw default deny incoming
+    ufw default allow outgoing
+    ufw enable
+    ufw allow ssh
+    systemctl restart ufw
+}
+
+install_docker() {
+    curl -fLsS https://get.docker.com/ | sh
+}
+
+install_ufw_docker() {
+    wget -O /usr/local/bin/ufw-docker https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+    chmod +x /usr/local/bin/ufw-docker
+    ufw-docker install
+    systemctl restart ufw
+}
 
 # 菜单显示函数
 show_menu() {
@@ -139,6 +171,11 @@ show_menu() {
     echo "  1. 基础环境初始化（安装常用工具）"
     echo "  2. 设置主机名"
     echo "  3. 设置 ssh "
+    echo "  4. 安装 zsh + zim "
+    echo "  5. 安装 trzsz "
+    echo "  6. 安装 ufw "
+    echo "  7. 安装 docker "
+    echo "  8. 安装 ufw-docker "
     echo "  0. 退出脚本"
     echo "---------------------------------------------------------"
     read -p "请输入选项：" choice
@@ -161,6 +198,26 @@ while true; do
             ;;
         3)
             setup_ssh
+            read -p "按 Enter 键返回菜单"
+            ;;
+        4)
+            install_zsh
+            read -p "按 Enter 键返回菜单"
+            ;;
+        5)
+            install_trzsz
+            read -p "按 Enter 键返回菜单"
+            ;;
+        6)
+            install_ufw
+            read -p "按 Enter 键返回菜单"
+            ;;
+        7)
+            install_docker
+            read -p "按 Enter 键返回菜单"
+            ;;
+        8)
+            install_ufw_docker
             read -p "按 Enter 键返回菜单"
             ;;
         0)
