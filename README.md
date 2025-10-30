@@ -5,5 +5,5 @@ sh <(curl -sL https://raw.githubusercontent.com/viacooky/scripts/refs/heads/main
 ```
 
 ``` SHELL
-sh <(curl -sL https://raw.githubusercontent.com/viacooky/scripts/refs/heads/main/.sh)
+sh <(curl -sL https://raw.githubusercontent.com/viacooky/scripts/refs/heads/main/debian_init.sh)
 ```
