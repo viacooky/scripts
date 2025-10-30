@@ -110,17 +110,16 @@ setup_ssh() {
  
 
     echo "[4/5] 重启服务"
-    rc-update add sshd default >/dev/null 2>&1
-    if ! rc-service sshd restart >/dev/null 2>&1; then
+    if ! systemctl restart sshd >/dev/null 2>&1; then
         echo "错误：sshd 服务重启失败！正在恢复配置" >&2
         cp "$sshd_bak" "$sshd_config"
-        rc-service sshd restart >/dev/null 2>&1
+        systemctl restart sshd >/dev/null 2>&1
         return 1
     fi
  
 
     echo "[5/5] 服务状态检查"
-    if rc-service sshd status | grep -q "started"; then
+    if systemctl status sshd | grep -q "started"; then
         echo "===== 设置 ssh 完成 ====="
         echo "  公钥路径：$auth_keys"
     else
